@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import contract from "../contracts/contract.json";
 import Hero from "../assets/hero.png";
+import SolarPanel from "../assets/solar-panel.jpg";
 
 const initialInfoState = {
   connected: false,
@@ -18,7 +19,7 @@ const initialMintState = {
   status: `Mint your ${contract.name}`,
   amount: 1,
   supply: "0",
-  cost: "0",
+  cost: "100000000000000000",
 };
 
 function Minter() {
@@ -137,7 +138,7 @@ function Minter() {
         info.web3.utils.toHex(Number(mintInfo.cost) * mintInfo.amount)
       ),
       data: info.contract.methods
-        .mint(info.account, mintInfo.amount)
+        .publicMint(mintInfo.amount)
         .encodeABI(),
     };
     try {
@@ -167,7 +168,7 @@ function Minter() {
   };
 
   const updateAmount = (newAmount) => {
-    if (newAmount <= 5 && newAmount >= 1) {
+    if (newAmount <= 5000000000000000000000000000000 && newAmount >= 1) {
       setMintInfo((prevState) => ({
         ...prevState,
         amount: newAmount,
@@ -186,8 +187,8 @@ function Minter() {
 
   useEffect(() => {
     if (info.connected) {
-      getSupply();
-      getCost();
+      //getSupply();
+      //getCost();
     }
   }, [info.connected]);
 
@@ -195,7 +196,7 @@ function Minter() {
     <div className="page">
       <div className="card">
         <div className="card_header colorGradient">
-          <img className="card_header_image ns" alt={"banner"} src={Hero} />
+          <img className="card_header_image ns" alt={"banner"} src={SolarPanel} />
         </div>
         {mintInfo.supply < contract.total_supply ? (
           <div className="card_body">
@@ -237,14 +238,7 @@ function Minter() {
                     mintInfo.amount}{" "}
                   {contract.chain_symbol}
                 </p>
-                <div style={{ width: 20 }}></div>
-                <p style={{ color: "var(--statusText)", textAlign: "center" }}>
-                  |
-                </p>
-                <div style={{ width: 20 }}></div>
-                <p style={{ color: "var(--statusText)", textAlign: "center" }}>
-                  {mintInfo.supply}/{contract.total_supply}
-                </p>
+                
               </div>
             ) : null}
             {mintInfo.status ? (
@@ -295,7 +289,7 @@ function Minter() {
           }}
           className="_90"
           target="_blank"
-          href="https://polygonscan.com/token/0x827acb09a2dc20e39c9aad7f7190d9bc53534192"
+          href="https://goerli.etherscan.io/address/0x158654322fEa1dBdba109C113D54e4e6086652c1"
         >
           View Contract
         </a>
