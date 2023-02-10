@@ -39,3 +39,4 @@ npm install
 ## Usage ℹ️
 
 This repo will be used in a youtube tutorial.
+"# EarthquakeSolarPanel" 
